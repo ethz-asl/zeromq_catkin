@@ -16,10 +16,10 @@ ExternalProject_Add(zeromq
 
 ExternalProject_Add(zeromq_cpp
   GIT_REPOSITORY https://github.com/zeromq/cppzmq.git
-  DEPENDS ZMQ
+  DEPENDS zeromq
   CONFIGURE_COMMAND ""
   BUILD_COMMAND ""
-  INSTALL_COMMAND cp ../zeromq_cpp/zmq.hpp ${CATKIN_DEVEL_PREFIX}/include/zeromq_cpp/zmq.hpp
+  INSTALL_COMMAND mkdir -p ${CATKIN_DEVEL_PREFIX}/include/zeromq_cpp && cp ../zeromq_cpp/zmq.hpp ${CATKIN_DEVEL_PREFIX}/include/zeromq_cpp/zmq.hpp
 )
 
 cs_add_library(${PROJECT_NAME}_dependency_tracker src/dependency_tracker.cc)

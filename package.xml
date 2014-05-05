@@ -1,7 +1,7 @@
 <package>
-  <name>gflags_catkin</name>
+  <name>zeromq_catkin</name>
   <version>0.0.0</version>
-  <description>gflags_catkin</description>
+  <description>zeromq_catkin</description>
   <maintainer email="slynen@ethz.ch">Simon Lynen</maintainer>
 
   <license>See package</license>
