@@ -23,10 +23,12 @@ ExternalProject_Add(zeromq_cpp
   INSTALL_COMMAND mkdir -p ${CATKIN_DEVEL_PREFIX}/include/zeromq_cpp && cp ../zeromq_cpp/zmq.hpp ${CATKIN_DEVEL_PREFIX}/include/zeromq_cpp/zmq.hpp
 )
 
+# TODO(dymczykm, tcies) would be cool to get rid of this everywhere
+link_directories(${CATKIN_DEVEL_PREFIX}/lib)
+
 cs_add_library(${PROJECT_NAME}_dependency_tracker src/dependency_tracker.cc)
 add_dependencies(${PROJECT_NAME}_dependency_tracker zeromq zeromq_cpp)
-target_link_libraries(${PROJECT_NAME}_dependency_tracker 
-  ${CATKIN_DEVEL_PREFIX}/lib/libzmq.so)
+target_link_libraries(${PROJECT_NAME}_dependency_tracker zmq)
 
 cs_install()
 
