@@ -5,26 +5,30 @@ find_package(catkin_simple REQUIRED)
 catkin_simple()
 
 include(ExternalProject)
+link_directories(${CATKIN_DEVEL_PREFIX}/lib)
 
-ExternalProject_Add(zeromq
+ExternalProject_Add(zeromq_src
   URL http://download.zeromq.org/zeromq-4.0.3.tar.gz
   URL_MD5 8348341a0ea577ff311630da0d624d45
-  CONFIGURE_COMMAND cd ../zeromq && ./configure --with-pic --prefix=${CATKIN_DEVEL_PREFIX}
-  BUILD_COMMAND cd ../zeromq && make -j8
-  INSTALL_COMMAND cd ../zeromq && make install -j8
+  CONFIGURE_COMMAND cd ../zeromq_src && ./configure --with-pic --prefix=${CATKIN_DEVEL_PREFIX}
+  BUILD_COMMAND cd ../zeromq_src && make -j8
+  INSTALL_COMMAND cd ../zeromq_src && make install -j8
 )
 
 ExternalProject_Add(zeromq_cpp
   GIT_REPOSITORY https://github.com/zeromq/cppzmq.git
-  DEPENDS zeromq
+  DEPENDS zeromq_src
+  UPDATE_COMMAND ""
   CONFIGURE_COMMAND ""
   BUILD_COMMAND ""
   INSTALL_COMMAND mkdir -p ${CATKIN_DEVEL_PREFIX}/include/zeromq_cpp && cp ../zeromq_cpp/zmq.hpp ${CATKIN_DEVEL_PREFIX}/include/zeromq_cpp/zmq.hpp
 )
 
 cs_add_library(${PROJECT_NAME}_dependency_tracker src/dependency_tracker.cc)
-add_dependencies(${PROJECT_NAME}_dependency_tracker zeromq zeromq_cpp)
+add_dependencies(${PROJECT_NAME}_dependency_tracker zeromq_src zeromq_cpp)
+target_link_libraries(${PROJECT_NAME}_dependency_tracker zmq)
 
 cs_install()
 
-cs_export(INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include)
+cs_export(INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include
+          CFG_EXTRAS zeromq-extras.cmake)
