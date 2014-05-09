@@ -5,7 +5,6 @@ find_package(catkin_simple REQUIRED)
 catkin_simple()
 
 include(ExternalProject)
-link_directories(${CATKIN_DEVEL_PREFIX}/lib)
 
 ExternalProject_Add(zeromq_src
   URL http://download.zeromq.org/zeromq-4.0.3.tar.gz
