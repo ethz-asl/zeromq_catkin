@@ -5,7 +5,6 @@ find_package(catkin_simple REQUIRED)
 catkin_simple()
 
 include(ExternalProject)
-link_directories(${CATKIN_DEVEL_PREFIX}/lib)
 
 ExternalProject_Add(zeromq_src
   URL http://download.zeromq.org/zeromq-4.0.3.tar.gz
@@ -26,7 +25,8 @@ ExternalProject_Add(zeromq_cpp
 
 cs_add_library(${PROJECT_NAME}_dependency_tracker src/dependency_tracker.cc)
 add_dependencies(${PROJECT_NAME}_dependency_tracker zeromq_src zeromq_cpp)
-target_link_libraries(${PROJECT_NAME}_dependency_tracker zmq)
+target_link_libraries(${PROJECT_NAME}_dependency_tracker 
+  ${CATKIN_DEVEL_PREFIX}/lib/libzmq${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 cs_install()
 
