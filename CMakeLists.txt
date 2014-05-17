@@ -6,6 +6,8 @@ catkin_simple()
 
 include(ExternalProject)
 
+file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
+
 ExternalProject_Add(zeromq_src
   URL http://download.zeromq.org/zeromq-4.0.3.tar.gz
   URL_MD5 8348341a0ea577ff311630da0d624d45
