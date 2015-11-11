@@ -9,8 +9,8 @@ include(ExternalProject)
 file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 
 ExternalProject_Add(zeromq_src
-  URL http://download.zeromq.org/zeromq-4.0.3.tar.gz
-  URL_MD5 8348341a0ea577ff311630da0d624d45
+  URL http://download.zeromq.org/zeromq-4.0.7.tar.gz
+  URL_MD5 9b46f7e7b0704b83638ef0d461fd59ab
   CONFIGURE_COMMAND cd ../zeromq_src && ./configure --with-pic --prefix=${CATKIN_DEVEL_PREFIX}
   BUILD_COMMAND cd ../zeromq_src && make -j8
   INSTALL_COMMAND cd ../zeromq_src && make install -j8
@@ -18,6 +18,7 @@ ExternalProject_Add(zeromq_src
 
 ExternalProject_Add(zeromq_cpp
   GIT_REPOSITORY https://github.com/zeromq/cppzmq.git
+  GIT_TAG 4d79066be3c3ed0cbf247d3a2eb04be2b803eb3c
   DEPENDS zeromq_src
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND ""
