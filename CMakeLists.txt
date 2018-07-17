@@ -25,12 +25,13 @@ ExternalProject_Add(zeromq_cpp
   INSTALL_COMMAND mkdir -p ${CATKIN_DEVEL_PREFIX}/include/zeromq_cpp && cp ../zeromq_cpp/zmq.hpp ${CATKIN_DEVEL_PREFIX}/include/zeromq_cpp/zmq.hpp
 )
 
-cs_add_library(${PROJECT_NAME} src/dependency_tracker.cc)
-add_dependencies(${PROJECT_NAME} zeromq_src zeromq_cpp)
-target_link_libraries(${PROJECT_NAME}
-  ${CATKIN_DEVEL_PREFIX}/lib/libzmq${CMAKE_SHARED_LIBRARY_SUFFIX})
-
-cs_install()
-
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/zeromq_cpp
+        DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION})
+install(FILES ${CATKIN_DEVEL_PREFIX}/include/zmq.h
+              ${CATKIN_DEVEL_PREFIX}/include/zmq_utils.h
+        DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION})
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/
+        DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        FILES_MATCHING PATTERN "libzmq*")
 cs_export(INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include
-          CFG_EXTRAS zeromq-extras.cmake)
+          LIBRARIES zmq)
